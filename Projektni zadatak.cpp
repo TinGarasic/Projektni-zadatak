@@ -35,8 +35,13 @@ mainhome:
     {
         ifstream players;
         players.open("kviz.txt", ios::binary);
-
+        // cout << playername << "\t" << score << endl;
         //binarna datoteka
+        //in_datoteka.read((char*)&B, sizeof(B));
+        if (players.eof())
+            break;
+        cout << playername << "\t" << score << endl;
+        players.close();
     }
     else if (choice == 'S')
     {
