@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    int countr, r, r1, count, i, n;
+    int countr, r, r1, count, i, n, x;
     float score;
     char choice;
     string playername;
@@ -33,20 +33,34 @@ mainhome:
         exit(1);
     else if (choice == 'I')
     {
+        system("cls");
+        x = 0;
         ifstream players;
         players.open("kviz.txt", ios::binary);
-
+        // cout << playername << "\t" << score << endl;
         //binarna datoteka
+        //in_datoteka.read((char*)&B, sizeof(B));
+        //while (players.eof() != x)
+        //{
+        //   cout << playername << "\t" << score << endl;
+        //    x++;
+        //}
+        //system.pause();
+        cout << playername << "\t" << score << endl;
+        system("pause");
+        players.close();
+        goto mainhome;
+        system("cls");
     }
     else if (choice == 'S')
     {
         system("cls");
 
         printf("\n\n\n\n\n\n\n\n\n\n\t\t\tUnesite svoje ime:");
-        getline(cin,playername);
+        getline(cin, playername);
 
         system("cls");
-        cout << "\n ------------------  Dobrodosli "<<playername<<" u C++ Program Kviz --------------------------"<< endl;
+        cout << "\n ------------------  Dobrodosli " << playername << " u C++ Program Kviz --------------------------" << endl;
         printf("\n\n Evo nekih pravila prije igre:");
         printf("\n -------------------------------------------------------------------------");
         printf("\n >> Postoje 2 runde u ovoj igri:ZAGRIJAVANJE i PRAVI KVIZ");
@@ -146,7 +160,7 @@ mainhome:
         }
     test:
         system("cls");
-        cout<<"\n\n\t*** Svaka cast "<<playername<<" mozete igrati kviz ***"<< endl;
+        cout << "\n\n\t*** Svaka cast " << playername << " mozete igrati kviz ***" << endl;
         printf("\n\n\n\n\t!Pritisnite bilo koju tipku da pocnete!");
         if (toupper(getch()) == 'p')
         {
