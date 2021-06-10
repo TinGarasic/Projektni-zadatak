@@ -46,8 +46,17 @@ mainhome:
         //    x++;
         //}
         //system.pause();
-        cout << playername << "\t" << score << endl;
-        system("pause");
+        //cout << playername << "\t" << score << endl;
+        if (players.is_open())
+        {
+            while (!players.eof())
+            {
+                getline(players, playername);
+                cin >> score;
+                cout << playername << "\t" << score << endl;
+            }
+        }
+        //system("pause");
         players.close();
         goto mainhome;
         system("cls");
