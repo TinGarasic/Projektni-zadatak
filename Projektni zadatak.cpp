@@ -10,9 +10,12 @@
 #include<fstream>
 using namespace std;
 
+using std::cout; using std::ofstream;
+using std::endl; using std::string;
+
 int main()
 {
-    int countr, r, r1, count, i, n, x;
+    int countr, r, r1, count, i, n, x, y;
     float score;
     char choice;
     string playername;
@@ -20,14 +23,14 @@ int main()
 mainhome:
     system("cls");
     printf("\t\t\tC PROGRAM KVIZ\n");
-    printf("\n\t\t________________________________________");
+    printf("\n\t\t_______________________________");
     printf("\n\t\t\t   DOBRODOSLI ");
     printf("\n\t\t\t       U ");
     printf("\n\t\t\t     KVIZ ");
     printf("\n\t\t > Pritisni S da zapocnes igru");
     printf("\n\t\t > Pritisni I za odigrane igre");
     printf("\n\t\t > Pritisni Q da izades             ");
-    printf("\n\t\t________________________________________\n\n");
+    printf("\n\t\t_______________________________\n\n");
     choice = toupper(getch());
     if (choice == 'Q')
         exit(1);
@@ -35,29 +38,35 @@ mainhome:
     {
         system("cls");
         x = 0;
-        ifstream players;
-        players.open("kviz.txt", ios::binary);
-        // cout << playername << "\t" << score << endl;
-        //binarna datoteka
-        //in_datoteka.read((char*)&B, sizeof(B));
-        //while (players.eof() != x)
-        //{
-        //   cout << playername << "\t" << score << endl;
-        //    x++;
-        //}
-        //system.pause();
-        //cout << playername << "\t" << score << endl;
-        if (players.is_open())
-        {
-            while (!players.eof())
+
+        int exit = 0;
+
+        while (exit == 0) {
+
+            string line;
+            ifstream myfile("kviz.txt");
+            cout << "Prethodno odigrane igre su:" << endl;
+            if (myfile.is_open())
             {
-                getline(players, playername);
-                cin >> score;
-                cout << playername << "\t" << score << endl;
+                y = 1;
+                while (getline(myfile, line))
+                {
+                    cout << line << '\n';
+                    y++;
+                    if (y % 2 != 0)
+                        cout << "-------------" << endl;
+                }
+                myfile.close();
             }
+
+            else cout << "Unable to open file";
+
+            printf("\n\t\t > Pritisni X da se vratis na pocetak");
+            choice = toupper(getch());
+
+            if (choice == 'X')
+                exit = 1;
         }
-        //system("pause");
-        players.close();
         goto mainhome;
         system("cls");
     }
@@ -169,7 +178,7 @@ mainhome:
         }
     test:
         system("cls");
-        cout << "\n\n\t*** Svaka cast " << playername << " mozete igrati kviz ***" << endl;
+        cout << "\n\n\t** Svaka cast " << playername << " mozete igrati kviz **" << endl;
         printf("\n\n\n\n\t!Pritisnite bilo koju tipku da pocnete!");
         if (toupper(getch()) == 'p')
         {
@@ -334,26 +343,31 @@ mainhome:
     score:
         system("cls");
         score = (float)countr * 10;
+
+        string filename("kviz.txt");
+        ofstream file_out;
+
+        file_out.open(filename, std::ios_base::app);
+        file_out << playername << endl;
+        file_out << score << endl;
+
         if (score > 0.00 && score < 100)
         {
 
-            printf("\n\n\t\t**************** SVAKA CAST *****************");
+            printf("\n\n\t\t*** SVAKA CAST ****");
             printf("\n\t Osvojili ste %.f bodova", score); goto go;
-            ofstream players;
-            players.open("kviz.txt", ios::binary);
-            cout << playername << "\t" << score << endl;
-            players.close();
+
         }
 
         else if (score == 100)
         {
-            printf("\n\n\n \t\t**************** SVAKA CAST ****************");
+            printf("\n\n\n \t\t*** SVAKA CAST ***");
             printf("\n\t\t Osvojili ste %.f bodova", score);
             printf("\t\t CESTITAM!!");
         }
         else
         {
-            printf("\n\n\t******** ZAO MI JE ALI NISTE NISTA OSVOJILI ********");
+            printf("\n\n\t** ZAO MI JE ALI NISTE NISTA OSVOJILI **");
             printf("\n\t\t Hvala sto ste sudjelovali");
             printf("\n\t\t PROBAJTE PONOVO"); goto go;
         }
