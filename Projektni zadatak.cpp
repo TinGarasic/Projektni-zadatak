@@ -347,7 +347,7 @@ mainhome:
         string filename("kviz.txt");
         ofstream file_out;
 
-        file_out.open(filename, std::ios_base::app);
+        file_out.open(filename, ios::app);
         file_out << playername << endl;
         file_out << score << endl;
 
