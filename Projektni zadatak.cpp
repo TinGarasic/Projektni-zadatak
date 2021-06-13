@@ -262,8 +262,7 @@ mainhome:
                 }
                 else
                 {
-                    printf("\n\nNETOCNO!!! Tocan odgovor je B.3 minute");
-                    getch();
+                    printf("\n\nNETOCNO!!! Tocan odgovor je B.3 minute");getch();
                     goto score;
                     break;
                 }
@@ -277,8 +276,9 @@ mainhome:
                 }
                 else
                 {
-                    printf("\n\nNETOCNO!!! Tocan odgovor je B.7"); goto score;
-                    getch();
+                    printf("\n\nNETOCNO!!! Tocan odgovor je B.7");
+                    getch(); 
+                    goto score;
                     break;
                 }
 
