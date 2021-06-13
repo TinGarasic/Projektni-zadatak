@@ -13,31 +13,24 @@ using namespace std;
 using std::cout; using std::ofstream;
 using std::endl; using std::string;
 
-struct player_data
-{
-  std::string name;
-  int score;
-};
-
-
 int main()
 {
-    int countr, r, r1, count, i, n, x;
+    int countr, r, r1, count, i, n, x, y;
     float score;
     char choice;
-    char playername[100];
+    string playername;
     int getch();
 mainhome:
     system("cls");
     printf("\t\t\tC PROGRAM KVIZ\n");
-    printf("\n\t\t______");
+    printf("\n\t\t_______________________________");
     printf("\n\t\t\t   DOBRODOSLI ");
     printf("\n\t\t\t       U ");
     printf("\n\t\t\t     KVIZ ");
     printf("\n\t\t > Pritisni S da zapocnes igru");
     printf("\n\t\t > Pritisni I za odigrane igre");
     printf("\n\t\t > Pritisni Q da izades             ");
-    printf("\n\t\t______\n\n");
+    printf("\n\t\t_______________________________\n\n");
     choice = toupper(getch());
     if (choice == 'Q')
         exit(1);
@@ -45,25 +38,35 @@ mainhome:
     {
         system("cls");
         x = 0;
-	
-		int exit=0;
 
-		  std::ifstream loadfile("kviz.dat", std::ios_base::binary);
-  if(loadfile.good())
-  {
-    player_data Player1;
-    std::getline(loadfile,Player1.name,'\0'); // get player name (remember we null ternimated in binary)
-    loadfile.read((char*)&Player1.score,sizeof(Player1.score)); // read int bytes
-    std::cout << Player1.name << std::endl;
-    std::cout << Player1.score << std::endl;
-	std::cout << "\n " << std::endl;
-  }
+        int exit = 0;
 
-		printf("\n\t\t > Pritisni X da se vratis na pocetak");
+        while (exit == 0) {
 
-		while(choice != 'X')
-		choice = toupper(getch());
-	
+            string line;
+            ifstream myfile("kviz.txt");
+            cout << "Prethodno odigrane igre su:" << endl;
+            if (myfile.is_open())
+            {
+                y = 1;
+                while (getline(myfile, line))
+                {
+                    cout << line << '\n';
+                    y++;
+                    if (y % 2 != 0)
+                        cout << "-------------" << endl;
+                }
+                myfile.close();
+            }
+
+            else cout << "Unable to open file";
+
+            printf("\n\t\t > Pritisni X da se vratis na pocetak");
+            choice = toupper(getch());
+
+            if (choice == 'X')
+                exit = 1;
+        }
         goto mainhome;
         system("cls");
     }
@@ -72,7 +75,7 @@ mainhome:
         system("cls");
 
         printf("\n\n\n\n\n\n\n\n\n\n\t\t\tUnesite svoje ime:");
-        gets_s(playername);
+        getline(cin, playername);
 
         system("cls");
         cout << "\n ------------------  Dobrodosli " << playername << " u C++ Program Kviz --------------------------" << endl;
@@ -341,20 +344,12 @@ mainhome:
         system("cls");
         score = (float)countr * 10;
 
-  std::ofstream savefile("kviz.dat", std::ios_base::binary);
-  if(savefile.good())
-  {
-    player_data Player1;
-    Player1.name = playername;
-    Player1.score = score;
-    savefile.write(Player1.name.c_str(),Player1.name.size()); // write string to binary file
-    savefile.write("\0",sizeof(char)); // null end string for easier reading
-    savefile.write(reinterpret_cast<char*>(&Player1.score),sizeof(Player1.score)); // write int to binary file
-    savefile.close();
-  }
+        string filename("kviz.txt");
+        ofstream file_out;
 
-
-
+        file_out.open(filename, std::ios_base::app);
+        file_out << playername << endl;
+        file_out << score << endl;
 
         if (score > 0.00 && score < 100)
         {
